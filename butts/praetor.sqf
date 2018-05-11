@@ -9,5 +9,4 @@ hint "Building a Praetor AAA";
 sleep 3;
 	_crew1 = creategroup WEST;
 	_airframe1 = [getpos btc_create_object_point, 0, "B_AAA_System_01_F", _crew1] call BIS_fnc_spawnVehicle;
-} else {
-hint "You need to be an Engineer to request this!"};
+} else { hint "You need to be an Engineer to request this!" };

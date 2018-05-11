@@ -1,3 +1,4 @@
+tp_cooldown = 0;
 if (hasInterface) then {
 
 	//butts_addac = compile preprocessFileLineNumbers "butts\b_actions.sqf";
@@ -13,5 +14,11 @@ if (hasInterface) then {
 	butts_mg = compile preprocessFileLineNumbers "butts\auto_mg.sqf";
 	butts_gmg = compile preprocessFileLineNumbers "butts\auto_gmg.sqf";
 	butts_praetor = compile preprocessFileLineNumbers "butts\praetor.sqf";
+	butts_centurion = compile preprocessFileLineNumbers "butts\centurion.sqf";
+	butts_spartan = compile preprocessFileLineNumbers "butts\spartan.sqf";
 	//butts_addac = compile preprocessFileLineNumbers "butts\b_actions.sqf";
+};
+
+if (isServer) then {
+	[] execVM "butts\pad_lights.sqf";
 };

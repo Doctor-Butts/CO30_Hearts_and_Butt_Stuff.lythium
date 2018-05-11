@@ -1,8 +1,6 @@
-if (isNil {player getVariable "interpreter"}) exitWith {hint "You don't speak the language, get an Interpreter!";};
+params ["_man"];
 
-private ["_man","_rep","_chance","_info","_info_type","_random","_text","_ho_left","_info_num","_repnum"];
-
-_man = _this select 0;
+if (isNil {player getVariable "interpreter"}) exitWith {[name _man,localize "STR_BTC_HAM_CON_INFO_ASKREP_NOINTER"] spawn btc_fnc_showSubtitle;}; //I can't understand what is saying
 
 btc_int_ask_data = nil;
 
@@ -10,35 +8,32 @@ btc_int_ask_data = nil;
 
 waitUntil {!(isNil "btc_int_ask_data")};
 
-_rep = btc_int_ask_data;
-_repnum = btc_int_ask_data;
+private _rep = btc_int_ask_data;
 
+private "_ho_left";
 if ((round random 1) isEqualTo 1) then {
-	btc_int_ask_data = nil;
-	[8,nil,player] remoteExec ["btc_fnc_int_ask_var", 2];
+    btc_int_ask_data = nil;
+    [8,nil,player] remoteExec ["btc_fnc_int_ask_var", 2];
 
-	waitUntil {!(isNil "btc_int_ask_data")};
+    waitUntil {!(isNil "btc_int_ask_data")};
 
-	_ho_left = format ["I heard there are %1 hideouts left.", btc_int_ask_data];
+    _ho_left = format [localize "STR_BTC_HAM_CON_INFO_ASKREP_HIDEOUTS", btc_int_ask_data]; //I heard about %1 hideouts left.
 } else {
-	_ho_left = "";
+    _ho_left = "";
 };
 
-switch (true) do {
-	case (_rep < 200) : {_info_type = "very low";};
-	case (_rep >= 200 && _rep < 500) : {_info_type = "low";};
-	case (_rep >= 500 && _rep < 750) : {_info_type = "normal";};
-	case (_rep >= 750) : {_info_type = "high";};
+private _info_type = switch (true) do {
+    case (_rep < 200): {localize "STR_BTC_HAM_CON_INFO_ASKREP_VLOW"}; //very low
+    case (_rep >= 200 && _rep < 500): {localize "STR_BTC_HAM_CON_INFO_ASKREP_LOW"}; //low
+    case (_rep >= 500 && _rep < 750): {localize "STR_BTC_HAM_CON_INFO_ASKREP_NORMAL"}; //normal
+    case (_rep >= 750): {localize "STR_BTC_HAM_CON_INFO_ASKREP_HIGH"}; //high
 };
 
-//_info_num = missionNamespace getVariable "btc_global_reputation";
-_info_num = btc_global_reputation;
+private _text = selectRandom [
+    localize "STR_BTC_HAM_CON_INFO_ASKREP_ASK1", //Sir, your reputation is
+    localize "STR_BTC_HAM_CON_INFO_ASKREP_ASK2", //Hello ! Your reputation is
+    localize "STR_BTC_HAM_CON_INFO_ASKREP_ASK3"  //I think your reputation is
+];
 
-_chance = (random 100);
-switch (true) do {
-	case (_chance < 30) : {_text = "Sir, your reputation is";};
-	case (_chance >= 30 && _chance < 60) : {_text = "Hello! Your reputation is";};
-	case (_chance >= 60) : {_text = format ["My name is %1 and I think your reputation is", name _man];};
-};
-
+[name _man,format ["%1 %2. %3", _text, _info_type, _ho_left]] spawn btc_fnc_showSubtitle;
 hint format ["%1 %2 (%4). %3", _text, _info_type, _ho_left, _repnum];

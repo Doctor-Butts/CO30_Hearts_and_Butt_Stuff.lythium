@@ -26,24 +26,34 @@ _baction = ["fob_redeploy", "Re-Deploy", "\A3\ui_f\data\igui\cfg\simpleTasks\typ
 //adds action to fob flag to go back to base
 _baction = ["fob_rtb", "Return to Base", "\A3\ui_f\data\igui\cfg\simpleTasks\types\takeoff_ca.paa", {[] spawn butts_tp}, {true}, {}, [], [0,0,-2], 5] call ace_interact_menu_fnc_createAction;
 [btc_fob_flag, 0, ["ACE_MainActions"], _baction] call ace_interact_menu_fnc_addActionToClass;
-//gives arsenal at FOB
-_baction = ["fob_arsenal", "Arsenal", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn BIS_fnc_arsenal}, {true}, {}, [], [0,0,-2], 5] call ace_interact_menu_fnc_createAction;
+//gives BIS arsenal at FOB
+_baction = ["fob_bis_arsenal", "BIS Arsenal", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn BIS_fnc_arsenal}, {true}, {}, [], [0,0,-2], 5] call ace_interact_menu_fnc_createAction;
+[btc_fob_flag, 0, ["ACE_MainActions"], _baction] call ace_interact_menu_fnc_addActionToClass;
+//gives ACE arsenal at FOB
+_baction = ["fob_bis_arsenal", "ACE Arsenal", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {[player, player, true] call ace_arsenal_fnc_openBox}, {true}, {}, [], [0,0,-2], 5] call ace_interact_menu_fnc_createAction;
 [btc_fob_flag, 0, ["ACE_MainActions"], _baction] call ace_interact_menu_fnc_addActionToClass;
 //a script that might work. recommended to rearm some RHS vehicles since the BAF servicing modules might break them
 _baction = ["butts_rearm", "5 minute full re-arm", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rearm_ca.paa", {["Open",true ] spawn butts_rearm}, {true}, {}, [], [0.4,0,0.4], 5] call ace_interact_menu_fnc_createAction;
 [btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
 //let engineer spawn autonomous MG at btc create object
-_baction = ["butts_mg", "Spawn Autonomous Machinegun", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn butts_mg}, {true}, {}, [], [0.4,0,0.4], 5] call ace_interact_menu_fnc_createAction;
+_baction = ["butts_mg", "Spawn Autonomous Machinegun", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn butts_mg}, {true}, {}, [], [], 5] call ace_interact_menu_fnc_createAction;
 [btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
 //let engineer spawn autonomous GMG at btc create object
-_baction = ["butts_gmg", "Spawn Autonomous Grenade Machinegun", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn butts_gmg}, {true}, {}, [], [0.4,0,0.4], 5] call ace_interact_menu_fnc_createAction;
+_baction = ["butts_gmg", "Spawn Autonomous Grenade Machinegun", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn butts_gmg}, {true}, {}, [], [], 5] call ace_interact_menu_fnc_createAction;
 [btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
 //let engineer spawn autonomous praetor at btc create object
-_baction = ["butts_praetor", "Spawn Praetor", "\A3\ui_f\data\igui\cfg\simpleTasks\types\rifle_ca.paa", {["Open",true ] spawn butts_praetor}, {true}, {}, [], [0.4,0,0.4], 5] call ace_interact_menu_fnc_createAction;
+_baction = ["butts_praetor", "Spawn Praetor", "\A3\ui_f\data\igui\cfg\simpleTasks\types\defend_ca.paa", {["Open",true ] spawn butts_praetor}, {true}, {}, [], [], 5] call ace_interact_menu_fnc_createAction;
+[btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
+//let engineer spawn autonomous centurion at btc create object
+_baction = ["butts_centurion", "Spawn Centurion", "\A3\ui_f\data\igui\cfg\simpleTasks\types\defend_ca.paa", {["Open",true ] spawn butts_centurion}, {true}, {}, [], [], 5] call ace_interact_menu_fnc_createAction;
+[btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
+//let engineer spawn autonomous spartan at btc create object
+_baction = ["butts_spartan", "Spawn Spartan", "\A3\ui_f\data\igui\cfg\simpleTasks\types\defend_ca.paa", {["Open",true ] spawn butts_spartan}, {true}, {}, [], [], 5] call ace_interact_menu_fnc_createAction;
 [btc_create_object, 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToObject;
 // ensures that praetor can be placed
-_baction = ["Place", "Place", "\A3\ui_f\data\map\markers\military\end_CA.paa", {(_this select 0) spawn btc_fnc_log_place}, {!btc_log_placing}] call ace_interact_menu_fnc_createAction;
-{["B_AAA_System_01_F", 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToClass;
+/* _baction = ["Place", "Place", "\A3\ui_f\data\map\markers\military\end_CA.paa", {(_this select 0) spawn btc_fnc_log_place}, {!btc_log_placing}] call ace_interact_menu_fnc_createAction;
+{["B_AAA_System_01_F", 0, ["ACE_MainActions","Butts"], _baction] call ace_interact_menu_fnc_addActionToClass; */
+
 
 //finally, this makes all FOBs a retransmitter for TFAR
-[btc_fob_flag,10000] call TFAR_antennas_fnc_initRadioTower;
+//[btc_fob_flag,10000] call TFAR_antennas_fnc_initRadioTower;
